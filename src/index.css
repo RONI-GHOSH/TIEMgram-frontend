@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  @apply bg-[#faf7f7] text-[#2d1b1b] dark:bg-zinc-950 dark:text-zinc-100 transition-colors duration-300;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(238, 226, 223, 0.8);
+}
+.dark .glass {
+  background: rgba(18, 18, 24, 0.7);
+  border-color: rgba(39, 39, 42, 0.6);
+}
+
+/* Mesh gradients for beautiful backing colors */
+.bg-mesh-purple {
+  background-image: radial-gradient(at 0% 0%, rgba(239, 85, 62, 0.15) 0px, transparent 50%),
+                    radial-gradient(at 100% 0%, rgba(247, 155, 66, 0.15) 0px, transparent 50%),
+                    radial-gradient(at 50% 100%, rgba(214, 51, 59, 0.12) 0px, transparent 50%);
+}
+.dark .bg-mesh-purple {
+  background-image: radial-gradient(at 0% 0%, rgba(239, 85, 62, 0.12) 0px, transparent 50%),
+                    radial-gradient(at 100% 0%, rgba(247, 155, 66, 0.12) 0px, transparent 50%),
+                    radial-gradient(at 50% 100%, rgba(214, 51, 59, 0.08) 0px, transparent 50%);
+}
+
+/* Pulse animation for active stories */
+.story-ring-active {
+  background: linear-gradient(to right, #ef553e, #f79b42);
+  padding: 3px;
+}
+
+/* Interactive elements */
+.hover-card-glow {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-card-glow:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px -15px rgba(239, 85, 62, 0.15);
+}
+.dark .hover-card-glow:hover {
+  box-shadow: 0 20px 40px -15px rgba(239, 85, 62, 0.25);
+}
+
+/* Hearts popping micro-animation */
+.animate-heart-pop {
+  animation: heartPop 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom transitions and reveal on scroll */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(32px);
+  will-change: transform, opacity;
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delay classes for smoother entry */
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-400 { transition-delay: 400ms; }
+
+/* Smooth transitions */
+.transition-transform-bezier {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.transition-all-bezier {
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
