@@ -36,22 +36,20 @@ const VerifyOTP = ({ setCurrentView }) => {
       const data = await response.json();
 
       if (response.ok && data.success) {
-        // Store tokens from OTP verification response
-        if (data.data?.access_token || data.access_token) {
-          localStorage.setItem("access_token", data.data?.access_token || data.access_token);
-        }
-        if (data.data?.refresh_token || data.refresh_token) {
-          localStorage.setItem("refresh_token", data.data?.refresh_token || data.refresh_token);
-        }
-        if (data.data?.user || data.user) {
-          localStorage.setItem("user", JSON.stringify(data.data?.user || data.user));
-        }
+        // Normalize token keys (support snake_case, camelCase, and different payload shapes)
+        const accessToken = data?.data?.access_token || data?.access_token || data?.data?.accessToken || data?.accessToken || data?.data?.token || data?.token;
+        const refreshToken = data?.data?.refresh_token || data?.refresh_token || data?.data?.refreshToken || data?.refreshToken;
+        const userObj = data?.data?.user || data?.user || data?.data || null;
+
+        if (accessToken) localStorage.setItem("access_token", accessToken);
+        if (refreshToken) localStorage.setItem("refresh_token", refreshToken);
+        if (userObj) localStorage.setItem("user", typeof userObj === 'string' ? userObj : JSON.stringify(userObj));
 
         setIsSuccess(true);
         setMessage("Email verified successfully! Redirecting...");
 
         // If we got tokens, go directly to home
-        if (data.data?.access_token || data.access_token) {
+        if (accessToken) {
           setTimeout(() => {
             if (setCurrentView) setCurrentView("home");
             navigate("/home");
@@ -84,7 +82,7 @@ const VerifyOTP = ({ setCurrentView }) => {
             >
               Verify Your Email
             </h1>
-            <p className="text-[#6b4b4b] mt-2 text-[15px] font-medium leading-7">
+              <p className="text-[#6b4b4b] dark:text-zinc-300 mt-2 text-[15px] font-medium leading-7">
               We've sent an OTP to <br/><span className="font-bold text-red-500">{email || "your email address"}</span>
             </p>
           </div>
@@ -92,7 +90,7 @@ const VerifyOTP = ({ setCurrentView }) => {
           {!isSuccess ? (
             <form onSubmit={handleSubmit} className="space-y-4 mt-8">
               <div className="relative">
-                <KeyRound className="absolute left-5 top-1/2 -translate-y-1/2 text-[#8b6666] w-5 h-5" />
+                <KeyRound className="absolute left-5 top-1/2 -translate-y-1/2 text-[#8b6666] dark:text-zinc-400 w-5 h-5" />
                 <input
                   type="text"
                   name="otp"
@@ -100,7 +98,7 @@ const VerifyOTP = ({ setCurrentView }) => {
                   onChange={(e) => setOtp(e.target.value)}
                   placeholder="Enter OTP"
                   required
-                  className="w-full pl-14 pr-5 py-4 bg-[#faf4f3] border border-[#ead8d5] rounded-xl outline-none transition-colors focus:border-red-300 text-center tracking-widest text-lg font-bold"
+                  className="w-full pl-14 pr-5 py-4 bg-[#faf4f3] dark:bg-zinc-900/60 border border-[#ead8d5] dark:border-zinc-800 rounded-xl outline-none transition-colors focus:border-red-300 dark:focus:border-red-500 text-center tracking-widest text-lg font-bold text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-zinc-400"
                   maxLength={6}
                 />
               </div>
