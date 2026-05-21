@@ -13,55 +13,62 @@ import LandingPage from "./pages/LandingPage";
 function App() {
   const location = useLocation();
 
-  // "landing"
-  // "login"
-  // "signup"
-  // "verify"
-  // "home"
-  // "profile"
-  // "my-profile"
-  // "edit-profile"
+  const normalizePath = (path) => {
+    const cleaned = path.replace(/\/+$|^\s+|\s+$/g, "");
+    return cleaned === "" ? "/" : cleaned;
+  };
+
+  const getViewForPath = (path, isAuthenticated) => {
+    if (path.startsWith("/profile/")) {
+      const username = path.substring("/profile/".length);
+      if (!isAuthenticated) return "login";
+      if (username) {
+        localStorage.setItem("selected_username", username);
+        return "profile";
+      }
+    }
+
+    if (path === "/my-profile") {
+      return isAuthenticated ? "my-profile" : "login";
+    }
+
+    if (path === "/edit-profile") {
+      return isAuthenticated ? "edit-profile" : "login";
+    }
+
+    if (path === "/home") {
+      return isAuthenticated ? "home" : "login";
+    }
+
+    if (path === "/login") {
+      return isAuthenticated ? "home" : "login";
+    }
+
+    if (path === "/signup") {
+      return isAuthenticated ? "home" : "signup";
+    }
+
+    if (path === "/verify") {
+      return "verify";
+    }
+
+    if (path === "/landing") {
+      return isAuthenticated ? "home" : "landing";
+    }
+
+    return isAuthenticated ? "home" : "landing";
+  };
 
   const [currentView, setCurrentView] = useState(() => {
     const token = localStorage.getItem("access_token");
-    return token ? "home" : "landing";
+    const isAuthenticated = !!token;
+    return getViewForPath(normalizePath(window.location.pathname), isAuthenticated);
   });
 
   useEffect(() => {
-    const path = location.pathname;
     const token = localStorage.getItem("access_token");
     const isAuthenticated = !!token;
-
-    if (path.startsWith("/profile/")) {
-      if (!isAuthenticated) { setCurrentView("login"); return; }
-      const username = path.substring("/profile/".length);
-      if (username) {
-        localStorage.setItem("selected_username", username);
-        setCurrentView("profile");
-      }
-    } else if (path === "/my-profile") {
-      if (!isAuthenticated) { setCurrentView("login"); return; }
-      setCurrentView("my-profile");
-    } else if (path === "/edit-profile") {
-      if (!isAuthenticated) { setCurrentView("login"); return; }
-      setCurrentView("edit-profile");
-    } else if (path === "/home") {
-      if (!isAuthenticated) { setCurrentView("login"); return; }
-      setCurrentView("home");
-    } else if (path === "/login") {
-      if (isAuthenticated) { setCurrentView("home"); return; }
-      setCurrentView("login");
-    } else if (path === "/signup") {
-      if (isAuthenticated) { setCurrentView("home"); return; }
-      setCurrentView("signup");
-    } else if (path === "/verify") {
-      setCurrentView("verify");
-    } else if (path === "/landing") {
-      if (isAuthenticated) { setCurrentView("home"); return; }
-      setCurrentView("landing");
-    } else if (path === "/") {
-      setCurrentView(isAuthenticated ? "home" : "landing");
-    }
+    setCurrentView(getViewForPath(normalizePath(location.pathname), isAuthenticated));
   }, [location.pathname]);
 
 
