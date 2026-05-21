@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { X, ChevronLeft, ChevronRight, Volume2, VolumeX, Trash2, Eye, Calendar } from "lucide-react";
+import { getAvatarUrl } from "../utils/avatar";
 
 function StoryViewerModal({ 
   userStories = [], // Grouped stories [{ username, full_name, avatar, stories: [...] }]
@@ -318,7 +319,7 @@ function StoryViewerModal({
         <div className="absolute top-7 left-0 right-0 z-30 px-4 flex items-center justify-between bg-gradient-to-b from-black/60 to-transparent pt-2 pb-6">
           <div className="flex items-center gap-3">
             <img 
-              src={activeUser.avatar || "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop"} 
+              src={getAvatarUrl(activeUser.avatar)} 
               alt="avatar" 
               className="w-9 h-9 rounded-full object-cover border border-white/40"
             />
@@ -518,7 +519,7 @@ function StoryViewerModal({
                     <div key={item.user.id} className="flex items-center justify-between gap-3 group animate-fadeIn">
                       <div className="flex items-center gap-3 flex-1 min-w-0">
                         <img 
-                          src={item.user.avatar_url || "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop"} 
+                          src={getAvatarUrl(item.user.avatar_url)} 
                           alt="avatar" 
                           className="w-10 h-10 rounded-full object-cover border border-zinc-200 dark:border-zinc-800"
                         />

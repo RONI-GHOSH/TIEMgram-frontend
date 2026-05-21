@@ -5,6 +5,7 @@ import {
   Search,
   UserPlus,
 } from "lucide-react";
+import { getAvatarUrl } from "../utils/avatar";
 import StoryViewerModal from "./StoryViewerModal";
 
 function FollowModal({
@@ -354,7 +355,7 @@ function FollowModal({
             filteredUsers.map((item, idx) => {
               const itemUsername = item.username || item.user?.username || "";
               const itemFullName = item.full_name || item.user?.full_name || itemUsername;
-              const itemAvatar = item.avatar_url || item.avatar || item.user?.avatar_url || item.user?.avatar || "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop";
+              const itemAvatar = getAvatarUrl(item.avatar_url || item.avatar || item.user?.avatar_url || item.user?.avatar);
               const isCurrentUser = (localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).username : "") === itemUsername;
 
               const isFollowedByMe = followingStates[itemUsername] || false;

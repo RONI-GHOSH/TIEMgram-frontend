@@ -5,6 +5,7 @@ import PostModal from "./PostModal";
 import CreatePostModal from "./CreatePostModal";
 import CreateStoryModal from "./CreateStoryModal";
 import StoryViewerModal from "./StoryViewerModal";
+import { getAvatarUrl, getProfileAvatar } from "../utils/avatar";
 
 import {
   Grid3X3,
@@ -427,7 +428,7 @@ function MyProfile({ setCurrentView }) {
                   }`}
                 >
                   <div className="w-full h-full rounded-full overflow-hidden border-[5px] border-white dark:border-[#111111]">
-                    <img src={profileData?.avatar_url || profileData?.avatar || currentUser?.avatar_url || currentUser?.avatar || profileImage} alt="profile avatar" className="w-full h-full object-cover" />
+                    <img src={getProfileAvatar(profileData, currentUser)} alt="profile avatar" className="w-full h-full object-cover" />
                   </div>
                 </div>
               );
@@ -661,7 +662,7 @@ function MyProfile({ setCurrentView }) {
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={profileData?.avatar_url || profileData?.avatar || currentUser?.avatar_url || currentUser?.avatar || profileImage}
+              src={getProfileAvatar(profileData, currentUser)}
               alt="Enlarged Avatar"
               className="w-full h-full rounded-full object-cover border-4 border-white dark:border-[#111111] shadow-2xl"
             />
@@ -693,7 +694,7 @@ function MyProfile({ setCurrentView }) {
           userStories={[{
             username: profileData?.username || currentUser?.username || "me",
             full_name: profileData?.full_name || currentUser?.full_name || "Me",
-            avatar: profileData?.avatar_url || profileData?.avatar || currentUser?.avatar_url || currentUser?.avatar || "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop",
+            avatar: getProfileAvatar(profileData, currentUser),
             stories: ownStories
           }]}
           initialUserIndex={0}

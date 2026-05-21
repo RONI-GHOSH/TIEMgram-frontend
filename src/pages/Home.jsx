@@ -25,6 +25,7 @@ import {
   LayoutGrid,
   List
 } from "lucide-react";
+import { getAvatarUrl, getProfileAvatar } from "../utils/avatar";
 
 /* ---------------- OPTIMIZED IMAGES ---------------- */
 const profile1 = "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop";
@@ -681,7 +682,7 @@ function HomePage({ setCurrentView }) {
           >
             <img
               loading="lazy"
-              src={profileData?.avatar_url || profileData?.avatar || profile1}
+              src={getProfileAvatar(profileData, currentUser)}
               alt="profile"
               className="w-20 h-20 lg:w-24 lg:h-24 rounded-full object-cover border-4 border-[#f2d8d2] dark:border-zinc-800 shadow-sm transition-colors duration-300"
             />
@@ -865,7 +866,7 @@ function HomePage({ setCurrentView }) {
                         className="flex items-center gap-3 px-4 py-3 hover:bg-[#fbf3f1] dark:hover:bg-zinc-800/40 cursor-pointer transition duration-150 group"
                       >
                         <img
-                          src={user.avatar_url || user.avatar || "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop"}
+                          src={getAvatarUrl(user.avatar_url || user.avatar)}
                           alt="avatar"
                           className="w-10 h-10 rounded-full object-cover border border-[#eee2df] dark:border-zinc-800"
                         />
@@ -945,7 +946,7 @@ function HomePage({ setCurrentView }) {
                 const ownGroupIdx = groupedStories.findIndex(g => g.username.toLowerCase() === myUsername);
                 const hasOwnStories = ownGroupIdx !== -1;
 
-                const avatarUrl = profileData?.avatar_url || currentUser?.avatar || "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop";
+                const avatarUrl = getProfileAvatar(profileData, currentUser);
 
                 return (
                   <div className="flex flex-col items-center min-w-[72px] sm:min-w-[80px] snap-start relative">
@@ -1021,7 +1022,7 @@ function HomePage({ setCurrentView }) {
                       }`}>
                         <img
                           loading="lazy"
-                          src={group.avatar || "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop"}
+                          src={getAvatarUrl(group.avatar)}
                           alt={group.username}
                           className="w-16 h-16 sm:w-18 sm:h-18 rounded-full object-cover border-2 sm:border-4 border-white dark:border-zinc-950 transition-colors duration-300"
                         />
@@ -1125,7 +1126,7 @@ function HomePage({ setCurrentView }) {
                       <div className="flex items-center gap-2 mb-2">
                         <img
                           loading="lazy"
-                          src={post.avatar || USER_AVATARS[post.username?.toLowerCase()] || story1}
+                          src={getAvatarUrl(post.avatar)}
                           alt="avatar"
                           className="w-7 h-7 rounded-full object-cover border border-zinc-200 dark:border-zinc-700"
                         />
@@ -1165,7 +1166,7 @@ function HomePage({ setCurrentView }) {
                         const hasStories = userStoriesList && userStoriesList.length > 0;
                         const isUnviewed = unviewedMap[lowerUser];
 
-                        const avatarSrc = post.avatar || USER_AVATARS[lowerUser] || story1;
+                        const avatarSrc = getAvatarUrl(post.avatar);
                         const avatarImg = (
                           <img
                             loading="lazy"
@@ -1428,7 +1429,7 @@ function HomePage({ setCurrentView }) {
                       }`}
                     >
                       <img 
-                        src={sug.avatar_url || USER_AVATARS[lowerUser] || story1} 
+                        src={getAvatarUrl(sug.avatar_url)} 
                         alt={sug.username} 
                         className="w-10 h-10 rounded-full object-cover border-2 border-white dark:border-zinc-950" 
                       />
@@ -1439,7 +1440,7 @@ function HomePage({ setCurrentView }) {
                       className="cursor-pointer hover:opacity-90 transition-opacity"
                     >
                       <img 
-                        src={sug.avatar_url || USER_AVATARS[lowerUser] || story1} 
+                        src={getAvatarUrl(sug.avatar_url)} 
                         alt={sug.username} 
                         className="w-10 h-10 rounded-full object-cover border border-[#eee2df] dark:border-zinc-800 transition-colors" 
                       />
@@ -1486,7 +1487,7 @@ function HomePage({ setCurrentView }) {
             <a href="#" className="hover:underline">Terms</a>
           </div>
           <p className="text-[11px] text-[#8b6666] dark:text-zinc-600 mt-4 font-medium uppercase tracking-wider transition-colors">
-            © 2026 TIEMGRAM FROM DIGITALIGROW
+            © 2026 TIEMGRAM FROM TIEM TEAM
           </p>
         </div>
       </aside>
@@ -1716,7 +1717,7 @@ function SearchUsersView({ handleProfileClick }) {
                   className="flex items-center gap-4 cursor-pointer group flex-1 min-w-0"
                 >
                   <img
-                    src={user.avatar_url || user.avatar || "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop"}
+                    src={getAvatarUrl(user.avatar_url || user.avatar)}
                     alt="avatar"
                     className="w-14 h-14 rounded-full object-cover border border-[#eee2df] dark:border-zinc-800/80"
                   />

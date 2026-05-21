@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { getAvatarUrl } from "../utils/avatar";
 
 const notifications = [
   {
@@ -167,7 +168,7 @@ function NotificationsFeed() {
             <div className="space-y-5">
               {pendingRequests.map((item, idx) => {
                 const itemUsername = item.username || item.user?.username || "";
-                const itemAvatar = item.avatar_url || item.avatar || item.user?.avatar_url || item.user?.avatar || "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop";
+                const itemAvatar = getAvatarUrl(item.avatar_url || item.avatar || item.user?.avatar_url || item.user?.avatar);
                 return (
                   <div key={`req-${idx}`} className="flex items-center justify-between hover:bg-zinc-50 dark:hover:bg-zinc-900/50 p-2 -mx-2 rounded-xl transition-all duration-300 cursor-pointer">
                     <div className="flex items-center gap-4 flex-1 pr-4">

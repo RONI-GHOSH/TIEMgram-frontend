@@ -27,6 +27,7 @@ import {
 import FollowModal from "./FollowModal";
 import PostModal from "./PostModal";
 import StoryViewerModal from "./StoryViewerModal";
+import { getAvatarUrl, getProfileAvatar } from "../utils/avatar";
 
 const profileImage =
   "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop";
@@ -512,7 +513,7 @@ function Profile({ setCurrentView }) {
                     >
                       <div className="w-[180px] h-[180px] rounded-full overflow-hidden border-[5px] border-white dark:border-zinc-950">
                         <img
-                          src={profileData?.avatar_url || profileData?.avatar || USER_AVATARS[username] || profileImage}
+                          src={getAvatarUrl(profileData?.avatar_url || profileData?.avatar)}
                           alt="avatar"
                           className="w-full h-full object-cover"
                         />
@@ -860,7 +861,7 @@ function Profile({ setCurrentView }) {
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={profileData?.avatar_url || profileData?.avatar || USER_AVATARS[username] || profileImage}
+              src={getAvatarUrl(profileData?.avatar_url || profileData?.avatar)}
               alt="Enlarged Avatar"
               className="w-full h-full rounded-full object-cover border-4 border-white dark:border-zinc-950 shadow-2xl"
             />
@@ -882,7 +883,7 @@ function Profile({ setCurrentView }) {
           userStories={[{
             username: profileData?.username || username || "user",
             full_name: profileData?.full_name || "User",
-            avatar: profileData?.avatar_url || profileData?.avatar || USER_AVATARS[username] || profileImage,
+            avatar: getAvatarUrl(profileData?.avatar_url || profileData?.avatar),
             stories: userStories
           }]}
           initialUserIndex={0}

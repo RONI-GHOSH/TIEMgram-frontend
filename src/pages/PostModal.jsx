@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { X, Heart, Send, MoreHorizontal, Globe, Lock, Check } from "lucide-react";
 import LikersModal from "./LikersModal";
 import StoryViewerModal from "./StoryViewerModal";
+import { getAvatarUrl } from "../utils/avatar";
 
 function PostModal({ post, onClose, onUpdatePost, onDeletePost }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -201,7 +202,7 @@ function PostModal({ post, onClose, onUpdatePost, onDeletePost }) {
               {(() => {
                 const hasStories = authorStories.length > 0;
                 const hasUnviewed = authorStories.some(s => s.is_viewed === false);
-                const avatarUrl = post.avatar || "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop";
+                const avatarUrl = getAvatarUrl(post.avatar);
                 return (
                   <div 
                     onClick={() => {
@@ -311,7 +312,7 @@ function PostModal({ post, onClose, onUpdatePost, onDeletePost }) {
                 {(() => {
                   const hasStories = authorStories.length > 0;
                   const hasUnviewed = authorStories.some(s => s.is_viewed === false);
-                  const avatarUrl = post.avatar || "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop";
+                  const avatarUrl = getAvatarUrl(post.avatar);
                   return (
                     <div 
                       onClick={() => {
@@ -403,7 +404,7 @@ function PostModal({ post, onClose, onUpdatePost, onDeletePost }) {
           userStories={[{
             username: post.username || post.User?.username || "user",
             full_name: post.username || post.User?.username || "User",
-            avatar: post.avatar || "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop",
+            avatar: getAvatarUrl(post.avatar),
             stories: authorStories
           }]}
           initialUserIndex={0}

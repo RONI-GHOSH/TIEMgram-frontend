@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { X, UserPlus, Check } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import StoryViewerModal from "./StoryViewerModal";
+import { getAvatarUrl } from "../utils/avatar";
 
 function LikersModal({ postId, isOpen, onClose }) {
   const navigate = useNavigate();
@@ -203,7 +204,7 @@ function LikersModal({ postId, isOpen, onClose }) {
                       const stories = activeStoryUsers[u.username];
                       const hasStories = stories && stories.length > 0;
                       const hasUnviewed = hasStories && stories.some(s => s.is_viewed === false);
-                      const avatarUrl = u.avatar_url || "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop";
+                      const avatarUrl = getAvatarUrl(u.avatar_url);
 
                       return (
                         <div 

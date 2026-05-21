@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, X, Heart, Eye, Play, TrendingUp } from "lucide-react";
 import PostModal from "./PostModal";
+import { getAvatarUrl } from "../utils/avatar";
 
-const defaultAvatar = "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop";
+const defaultAvatar = "/avatar.jpg";
 
 function ExplorePage({ handleProfileClick }) {
   // Explore posts state
