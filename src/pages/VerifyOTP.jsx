@@ -70,19 +70,19 @@ const VerifyOTP = ({ setCurrentView }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#faf7f7] to-[#fff1ee] flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen bg-gradient-to-br from-[#faf7f7] to-[#fff1ee] dark:from-zinc-900 dark:to-zinc-900 flex items-center justify-center px-4 py-10 transition-colors">
       <div className="w-full max-w-[460px]">
-        <div className="bg-white border border-[#f2e4e1] rounded-[30px] px-10 py-10 shadow-2xl shadow-red-100/40">
+        <div className="bg-white dark:bg-zinc-900 border border-[#f2e4e1] dark:border-zinc-800 rounded-[30px] px-10 py-10 shadow-2xl shadow-red-100/40 dark:shadow-none transition-colors">
           <div className="text-center">
-            <div className="mx-auto w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-4">
-              <Mail className="w-8 h-8 text-red-500" />
+            <div className="mx-auto w-16 h-16 bg-red-50 dark:bg-zinc-800/40 rounded-full flex items-center justify-center mb-4">
+              <Mail className="w-8 h-8 text-red-500 dark:text-red-400" />
             </div>
             <h1
               className="text-3xl font-extrabold py-2 bg-gradient-to-r from-red-700 via-red-500 to-orange-400 bg-clip-text text-transparent"
             >
               Verify Your Email
             </h1>
-              <p className="text-[#6b4b4b] dark:text-zinc-300 mt-2 text-[15px] font-medium leading-7">
+            <p className="text-[#6b4b4b] dark:text-zinc-300 mt-2 text-[15px] font-medium leading-7">
               We've sent an OTP to <br/><span className="font-bold text-red-500">{email || "your email address"}</span>
             </p>
           </div>
