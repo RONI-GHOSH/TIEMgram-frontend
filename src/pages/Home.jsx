@@ -80,6 +80,16 @@ function HomePage({ setCurrentView }) {
   const [feedViewMode, setFeedViewMode] = useState('list'); // 'list' or 'grid'
   const feedSentinelRef = useRef(null);
 
+  const uniquePostsById = (posts) => {
+    const seen = new Set();
+    return posts.filter(post => {
+      const key = post.id ?? JSON.stringify(post);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  };
+
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -297,15 +307,16 @@ function HomePage({ setCurrentView }) {
           createdAt: p.createdAt,
           isTextPost: p.type === "text" || (!p.PostMedia || p.PostMedia.length === 0),
         }));
+        const uniqueMapped = uniquePostsById(mapped);
         
         if (append) {
           setFeedPosts(prev => {
             const existingIds = new Set(prev.map(p => p.id));
-            const newPosts = mapped.filter(p => !existingIds.has(p.id));
+            const newPosts = uniqueMapped.filter(p => !existingIds.has(p.id));
             return [...prev, ...newPosts];
           });
         } else {
-          setFeedPosts(mapped);
+          setFeedPosts(uniqueMapped);
         }
         
         if (resJson.data.length === 0) {
